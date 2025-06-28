@@ -37,7 +37,7 @@ def train_with_tuning():
 
     for n in n_estimators_list:
         for depth in max_depth_list:
-            with mlflow.start_run(run_name=f"RF_n_estimators_{n}_max_depth_{depth}"):
+            with mlflow.start_run(run_name=f"RF_n_estimators_{n}_max_depth_{depth}", nested=True):
 
                 mlflow.log_input(mlflow_dataset, context="training")
                 
