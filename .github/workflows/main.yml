@@ -17,16 +17,12 @@ jobs:
       uses: conda-incubator/setup-miniconda@v3
       with:
         environment-file: modelling_files/conda.yaml
-        # Aktifkan environment yang baru dibuat secara otomatis
-        activate-environment: mlflow-env # 'mlflow-env' adalah nama env dari conda.yaml
+        activate-environment: mlflow-env
         auto-activate-base: false
 
-    - name: Run MLflow Project
-      # Gunakan shell khusus ini agar bisa mengenali conda yang sudah aktif
+    - name: Run Python Training Script Directly
       shell: bash -l {0}
-      run: |
-        echo "Conda environment activated. Running MLflow Project..."
-        mlflow run .
+      run: python modelling_files/modelling.py
 
     - name: Commit and Push Artifacts
       run: |
