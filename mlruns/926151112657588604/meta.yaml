@@ -1,0 +1,6 @@
+artifact_location: file:///home/runner/work/Workflow_CI/Workflow_CI/mlruns/926151112657588604
+creation_time: 1751096881858
+experiment_id: '926151112657588604'
+last_update_time: 1751096881858
+lifecycle_stage: active
+name: CI - Medical Cost Prediction
