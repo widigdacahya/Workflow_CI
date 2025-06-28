@@ -1,9 +1,8 @@
-# .github/workflows/main.yml
 name: MLflow CI Workflow
 
 on:
   push:
-    branches: [ main ] # Jalankan setiap kali ada push ke branch main
+    branches: [ main ]
 
 jobs:
   train-model:
@@ -11,14 +10,32 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
-
-    - name: Set up Python
-      uses: actions/setup-python@v4
       with:
-        python-version: '3.9'
+        fetch-depth: 0
 
-    - name: Install MLflow
-      run: pip install mlflow
+    - name: Set up Conda Environment
+      uses: conda-incubator/setup-miniconda@v3
+      with:
+        environment-file: modelling_files/conda.yaml
+        # Aktifkan environment yang baru dibuat secara otomatis
+        activate-environment: mlflow-env # 'mlflow-env' adalah nama env dari conda.yaml
+        auto-activate-base: false
 
     - name: Run MLflow Project
-      run: mlflow run . # Titik (.) artinya jalankan MLProject di folder ini
+      # Gunakan shell khusus ini agar bisa mengenali conda yang sudah aktif
+      shell: bash -l {0}
+      run: |
+        echo "Conda environment activated. Running MLflow Project..."
+        mlflow run .
+
+    - name: Commit and Push Artifacts
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        git add .
+        if git diff-index --quiet HEAD; then
+          echo "No changes to commit."
+        else
+          git commit -m "CHORE: Update model artifacts"
+          git push
+        fi
