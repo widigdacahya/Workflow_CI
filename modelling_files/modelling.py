@@ -9,13 +9,23 @@ import mlflow.sklearn
 
 def train_with_tuning():
 
-    # Dapatkan path absolut dari skrip ini
+    # CSV path stuff
     script_path = os.path.abspath(__file__)
     script_dir = os.path.dirname(script_path)
     project_root = os.path.dirname(script_dir)
     csv_path = os.path.join(project_root, 'preprocessing', 'MedicalCost_preprocessing', 'insurance_processed.csv')
 
-    mlflow.set_tracking_uri("http://127.0.0.1:5000")
+    # mlflow.set_tracking_uri("http://127.0.0.1:5000")
+    # Environment CI stuff
+    if os.getenv("CI"):
+        print("Running in CI environment. Logging to local 'mlruns' directory.")
+        mlflow.set_experiment("CI - Medical Cost Prediction")
+    else:
+        print("Running locally. Connecting to http://127.0.0.1:5000")
+        mlflow.set_tracking_uri("http://127.0.0.1:5000")
+        mlflow.set_experiment("Medical Cost Prediction")
+
+
     mlflow.set_experiment("Medical Cost Prediction")
 
 
