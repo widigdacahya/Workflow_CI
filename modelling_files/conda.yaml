@@ -1,0 +1,13 @@
+# MLProject/conda.yaml
+name: mlflow-env
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.9
+  - pip
+  - pip:
+    - mlflow
+    - scikit-learn
+    - pandas
+    - numpy

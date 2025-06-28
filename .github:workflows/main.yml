@@ -1,0 +1,24 @@
+# .github/workflows/main.yml
+name: MLflow CI Workflow
+
+on:
+  push:
+    branches: [ main ] # Jalankan setiap kali ada push ke branch main
+
+jobs:
+  train-model:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+
+    - name: Install MLflow
+      run: pip install mlflow
+
+    - name: Run MLflow Project
+      run: mlflow run . # Titik (.) artinya jalankan MLProject di folder ini
