@@ -18,7 +18,7 @@ def run_training(n_estimators, max_depth):
     script_path = os.path.abspath(__file__)
     script_dir = os.path.dirname(script_path)
     project_root = os.path.dirname(script_dir)
-    csv_path = os.path.join(project_root, '..', 'preprocessing', 'MedicalCost_preprocessing', 'insurance_processed.csv') # Tambahkan '..' untuk naik satu level lagi
+    csv_path = os.path.join(project_root, 'preprocessing', 'MedicalCost_preprocessing', 'insurance_processed.csv') # Tambahkan '..' untuk naik satu level lagi
     
     df = pd.read_csv(csv_path)
     X = df.drop('charges', axis=1)
