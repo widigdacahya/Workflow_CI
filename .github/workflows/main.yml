@@ -8,14 +8,17 @@ jobs:
   train-model:
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        n_estimator: [50, 100, 150]
+        max_depth: [5, 10, 15]
+
     permissions:
       contents: write
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
 
     - name: Set up Conda Environment
       uses: conda-incubator/setup-miniconda@v3
@@ -24,9 +27,9 @@ jobs:
         activate-environment: mlflow-env
         auto-activate-base: false
 
-    - name: Run Python Training Script Directly
+    - name: Run MLflow Project with Parameters
       shell: bash -l {0}
-      run: python modelling_files/modelling.py
+      run: mlflow run . -P n_estimators=${{ matrix.n_estimator }} -P max_depth=${{ matrix.max_depth }}
 
     - name: Commit and Push Artifacts
       run: |

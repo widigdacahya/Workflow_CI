@@ -1,8 +1,9 @@
 name: Medical Cost Training
-
-# Path ini sekarang menunjuk ke folder yang sudah di-rename
 conda_env: modelling_files/conda.yaml
 
 entry_points:
   main:
-    command: "python modelling_files/modelling.py"
+    parameters:
+      n_estimators: {type: int, default: 100}
+      max_depth: {type: int, default: 10}
+    command: "python modelling_files/modelling.py --n_estimators {n_estimators} --max_depth {max_depth}"
