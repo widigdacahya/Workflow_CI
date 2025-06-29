@@ -5,16 +5,14 @@ on:
     branches: [ main ]
 
 jobs:
-  train-model:
+  # JOB A: Menjalankan semua training secara paralel
+  train:
     runs-on: ubuntu-latest
-
     strategy:
+      fail-fast: false # Jangan batalkan job lain jika satu gagal
       matrix:
         n_estimator: [50, 100, 150]
         max_depth: [5, 10, 15]
-
-    permissions:
-      contents: write
 
     steps:
     - name: Checkout repository
@@ -30,15 +28,89 @@ jobs:
     - name: Run MLflow Project with Parameters
       shell: bash -l {0}
       run: mlflow run . -P n_estimators=${{ matrix.n_estimator }} -P max_depth=${{ matrix.max_depth }}
+    
+    # Setelah selesai, unggah folder mlruns sebagai artifact
+    - name: Upload MLruns as Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: mlruns-artifact-${{ matrix.n_estimator }}-${{ matrix.max_depth }}
+        path: mlruns/
 
+  # JOB B: Menggabungkan dan menyimpan hasil setelah SEMUA training selesai
+  commit-artifacts:
+    runs-on: ubuntu-latest
+    # Jalankan job ini HANYA JIKA semua job di 'train' berhasil
+    needs: train
+    permissions:
+      contents: write
+      
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+    
+    # Download semua artifact mlruns yang sudah diunggah
+    - name: Download all MLruns Artifacts
+      uses: actions/download-artifact@v3
+      with:
+        path: mlruns/ # Simpan semua di dalam folder mlruns
+        
+    - name: Unpack all artifacts
+      run: |
+        # Pindahkan isi dari setiap sub-folder artifact ke folder mlruns utama
+        find mlruns -mindepth 2 -maxdepth 2 -type d -name "mlruns" -exec cp -r {}/. mlruns/ \;
+        
     - name: Commit and Push Artifacts
       run: |
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-        git add .
+        git add mlruns/
         if git diff-index --quiet HEAD; then
           echo "No changes to commit."
         else
-          git commit -m "CHORE: Update model artifacts"
+          git commit -m "CHORE: Update model artifacts from matrix build"
           git push
         fi
+# name: MLflow CI Workflow
+
+# on:
+#   push:
+#     branches: [ main ]
+
+# jobs:
+#   train-model:
+#     runs-on: ubuntu-latest
+
+#     strategy:
+#       matrix:
+#         n_estimator: [50, 100, 150]
+#         max_depth: [5, 10, 15]
+
+#     permissions:
+#       contents: write
+
+#     steps:
+#     - name: Checkout repository
+#       uses: actions/checkout@v3
+
+#     - name: Set up Conda Environment
+#       uses: conda-incubator/setup-miniconda@v3
+#       with:
+#         environment-file: modelling_files/conda.yaml
+#         activate-environment: mlflow-env
+#         auto-activate-base: false
+
+#     - name: Run MLflow Project with Parameters
+#       shell: bash -l {0}
+#       run: mlflow run . -P n_estimators=${{ matrix.n_estimator }} -P max_depth=${{ matrix.max_depth }}
+
+#     - name: Commit and Push Artifacts
+#       run: |
+#         git config --global user.name 'github-actions[bot]'
+#         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+#         git add .
+#         if git diff-index --quiet HEAD; then
+#           echo "No changes to commit."
+#         else
+#           git commit -m "CHORE: Update model artifacts"
+#           git push
+#         fi
