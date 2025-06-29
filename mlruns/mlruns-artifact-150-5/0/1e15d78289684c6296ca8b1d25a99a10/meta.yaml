@@ -1,0 +1,15 @@
+artifact_uri: file:///home/runner/work/Workflow_CI/Workflow_CI/mlruns/0/1e15d78289684c6296ca8b1d25a99a10/artifacts
+end_time: 1751207233091
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 1e15d78289684c6296ca8b1d25a99a10
+run_name: fun-lamb-578
+run_uuid: 1e15d78289684c6296ca8b1d25a99a10
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751207197800
+status: 3
+tags: []
+user_id: runner

@@ -1,0 +1,33 @@
+artifact_path: random_forest_model
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.9.23
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.6.1
+mlflow_version: 2.14.1
+model_size_bytes: 471405
+model_uuid: 83ffdf3c347b41dab9ae0f7b9b705bc1
+run_id: 7e1493cec45242289ef870364d043ef0
+saved_input_example_info:
+  artifact_path: input_example.json
+  pandas_orient: split
+  type: dataframe
+signature:
+  inputs: '[{"type": "double", "name": "age", "required": true}, {"type": "double",
+    "name": "bmi", "required": true}, {"type": "double", "name": "children", "required":
+    true}, {"type": "boolean", "name": "sex_male", "required": true}, {"type": "boolean",
+    "name": "smoker_yes", "required": true}, {"type": "boolean", "name": "region_northwest",
+    "required": true}, {"type": "boolean", "name": "region_southeast", "required":
+    true}, {"type": "boolean", "name": "region_southwest", "required": true}]'
+  outputs: '[{"type": "double", "required": true}]'
+  params: null
+utc_time_created: '2025-06-28 08:13:58.528320'

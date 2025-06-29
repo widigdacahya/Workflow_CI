@@ -1,0 +1,15 @@
+artifact_uri: file:///home/runner/work/Workflow_CI/Workflow_CI/mlruns/0/a3d7bb7954f14afb8326a48975efcb9d/artifacts
+end_time: 1751207235061
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: a3d7bb7954f14afb8326a48975efcb9d
+run_name: handsome-fox-834
+run_uuid: a3d7bb7954f14afb8326a48975efcb9d
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751207201358
+status: 3
+tags: []
+user_id: runner

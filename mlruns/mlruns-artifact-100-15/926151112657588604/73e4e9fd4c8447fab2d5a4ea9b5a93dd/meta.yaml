@@ -1,0 +1,15 @@
+artifact_uri: file:///home/runner/work/Workflow_CI/Workflow_CI/mlruns/926151112657588604/73e4e9fd4c8447fab2d5a4ea9b5a93dd/artifacts
+end_time: 1751098438363
+entry_point_name: ''
+experiment_id: '926151112657588604'
+lifecycle_stage: active
+run_id: 73e4e9fd4c8447fab2d5a4ea9b5a93dd
+run_name: RF_n_estimators_50_max_depth_10
+run_uuid: 73e4e9fd4c8447fab2d5a4ea9b5a93dd
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751098437086
+status: 3
+tags: []
+user_id: runner

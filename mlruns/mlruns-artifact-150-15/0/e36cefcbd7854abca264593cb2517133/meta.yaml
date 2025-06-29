@@ -1,0 +1,15 @@
+artifact_uri: file:///home/runner/work/Workflow_CI/Workflow_CI/mlruns/0/e36cefcbd7854abca264593cb2517133/artifacts
+end_time: 1751207241351
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: e36cefcbd7854abca264593cb2517133
+run_name: merciful-kit-943
+run_uuid: e36cefcbd7854abca264593cb2517133
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751207205992
+status: 3
+tags: []
+user_id: runner

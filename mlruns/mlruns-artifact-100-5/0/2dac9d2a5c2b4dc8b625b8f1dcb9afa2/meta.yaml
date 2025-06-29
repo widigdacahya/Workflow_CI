@@ -1,0 +1,15 @@
+artifact_uri: file:///home/runner/work/Workflow_CI/Workflow_CI/mlruns/0/2dac9d2a5c2b4dc8b625b8f1dcb9afa2/artifacts
+end_time: 1751207241736
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 2dac9d2a5c2b4dc8b625b8f1dcb9afa2
+run_name: bedecked-bat-897
+run_uuid: 2dac9d2a5c2b4dc8b625b8f1dcb9afa2
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751207206600
+status: 3
+tags: []
+user_id: runner

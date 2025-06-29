@@ -1,0 +1,12 @@
+digest: 6583c582
+name: dataset
+profile: '{"num_rows": 1338, "num_elements": 12042}'
+schema: '{"mlflow_colspec": [{"type": "double", "name": "age", "required": true},
+  {"type": "double", "name": "bmi", "required": true}, {"type": "double", "name":
+  "children", "required": true}, {"type": "double", "name": "charges", "required":
+  true}, {"type": "boolean", "name": "sex_male", "required": true}, {"type": "boolean",
+  "name": "smoker_yes", "required": true}, {"type": "boolean", "name": "region_northwest",
+  "required": true}, {"type": "boolean", "name": "region_southeast", "required": true},
+  {"type": "boolean", "name": "region_southwest", "required": true}]}'
+source: '{"uri": "/home/runner/work/Workflow_CI/Workflow_CI/preprocessing/MedicalCost_preprocessing/insurance_processed.csv"}'
+source_type: local
