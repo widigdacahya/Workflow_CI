@@ -7,13 +7,11 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_absolute_error, r2_score, mean_squared_error
 import mlflow
 import mlflow.sklearn
+from mlflow.tracking import MlflowClient 
 
 def run_training(n_estimators, max_depth):
-    if os.getenv("CI"):
-        mlflow.set_experiment("CI - Medical Cost Prediction")
-    else:
-        mlflow.set_tracking_uri("http://127.0.0.1:5000")
-        mlflow.set_experiment("Medical Cost Prediction")
+    run_id = os.environ.get("MLFLOW_RUN_ID")
+    client = MlflowClient()
 
     script_path = os.path.abspath(__file__)
     script_dir = os.path.dirname(script_path)
@@ -24,32 +22,33 @@ def run_training(n_estimators, max_depth):
     X = df.drop('charges', axis=1)
     y = df['charges']
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-    
-    # Log parameter yang diterima dari command line
-    mlflow.log_param("n_estimators", n_estimators)
-    mlflow.log_param("max_depth", max_depth)
+
+    client.log_param(run_id, "n_estimators", n_estimators)
+    client.log_param(run_id, "max_depth", max_depth)
 
     # Latih model
     model = RandomForestRegressor(n_estimators=n_estimators, max_depth=max_depth, random_state=42)
     model.fit(X_train, y_train)
     y_pred = model.predict(X_test)
     
-    # Log metrik
+    # Hitung metrik
     mae = mean_absolute_error(y_test, y_pred)
     mse = mean_squared_error(y_test, y_pred)
     rmse = np.sqrt(mse)
     r2 = r2_score(y_test, y_pred)
 
-    mlflow.log_metric("mae", mae)
-    mlflow.log_metric("mse", mse)
-    mlflow.log_metric("rmse", rmse)
-    mlflow.log_metric("r2_score", r2)
+    # Log metrik menggunakan client, dengan run_id yang spesifik
+    client.log_metric(run_id, "mae", mae)
+    client.log_metric(run_id, "mse", mse)
+    client.log_metric(run_id, "rmse", rmse)
+    client.log_metric(run_id, "r2_score", r2)
 
-    # Log model
+    # Log model bisa tetap pakai cara biasa, tapi kita tambahkan run_id
     mlflow.sklearn.log_model(
         sk_model=model, 
         artifact_path="random_forest_model", 
-        input_example=X_train.head()
+        input_example=X_train.head(),
+        run_id=run_id # Beri tahu model ini milik run yang mana
     )
     
     print(f"Run dengan n_estimators={n_estimators} dan max_depth={max_depth} selesai.")
