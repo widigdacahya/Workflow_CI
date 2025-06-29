@@ -31,7 +31,7 @@ jobs:
     
     # Setelah selesai, unggah folder mlruns sebagai artifact
     - name: Upload MLruns as Artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: mlruns-artifact-${{ matrix.n_estimator }}-${{ matrix.max_depth }}
         path: mlruns/
@@ -50,7 +50,7 @@ jobs:
     
     # Download semua artifact mlruns yang sudah diunggah
     - name: Download all MLruns Artifacts
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         path: mlruns/ # Simpan semua di dalam folder mlruns
         
